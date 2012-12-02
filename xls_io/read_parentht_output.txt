@@ -1,0 +1,55 @@
+> setwd ( "/Users/jburkardt/public_html/r_src/xls_io")
+> source ( "read_parentht.R")
+
+READ_PARENTHT
+  Read the information in the file "parentht.csv"
+  and print it.
+  Note that this dataset has three columns, and the columns are labelled.
+
+  Here is the information read from "parentht.csv":
+   Gender Height Mother.s.Height Father.s.Height
+1       M   62.5              66              70
+2       M   64.6              58              69
+3       M   69.1              66              64
+4       M   73.9              68              71
+5       M   67.1              64              68
+6       M   64.4              62              66
+7       M   71.1              66              74
+8       M   71.0              63              73
+9       M   67.4              64              62
+10      M   69.3              65              69
+11      M   64.9              64              67
+12      M   68.1              64              68
+13      M   66.5              62              72
+14      M   67.5              69              66
+15      M   66.5              62              72
+16      M   70.3              67              68
+17      M   67.5              63              71
+18      M   68.5              66              67
+19      M   71.9              65              71
+20      M   67.8              71              75
+21      F   58.6              63              64
+22      F   64.7              67              65
+23      F   65.3              64              67
+24      F   61.0              60              72
+25      F   65.4              65              72
+26      F   67.4              67              72
+27      F   60.9              59              67
+28      F   63.1              60              71
+29      F   60.0              58              66
+30      F   71.1              72              75
+31      F   62.2              63              69
+32      F   67.2              67              70
+33      F   63.4              62              69
+34      F   68.4              69              62
+35      F   62.2              63              66
+36      F   64.7              64              76
+37      F   59.6              63              69
+38      F   61.0              64              68
+39      F   64.0              60              66
+40      F   65.4              65              68
+
+
+READ_PARENTHT
+  Normal end of execution.
+> q ( )

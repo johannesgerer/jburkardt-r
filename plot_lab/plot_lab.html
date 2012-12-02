@@ -1,0 +1,609 @@
+<html>
+
+  <head>
+    <title>
+      PLOT_LAB - Displaying Data Relationships and Distributions
+    </title>
+  </head>
+
+  <body bgcolor="#eeeeee" link="#cc0000" alink="#ff3300" vlink="#000055">
+
+    <h1 align = "center">
+      PLOT_LAB <br> Displaying Data Relationships and Distributions
+    </h1>
+
+    <hr>
+      http://people.sc.fsu.edu/~jburkardt/public_html/r_src/plot_lab/plot_lab.html
+    <hr>
+
+    <p>
+      <i>
+      Plotting is a way of illustrating your data when you explain it to
+      other people, but it can also be an important method for analyzing data.
+      The eye can spot certain patterns in a picture that are not obvious from
+      a table of numbers.  Since statistics is in part the search for patterns,
+      it is necessary to have some familiarity with the kinds of plots that
+      are useful in statistical analysis, and the way that the R language 
+      can produce such plots.
+      </i>
+    </p>
+
+    <p>
+      <i>
+        This lab will look at simple scatter plots, line plots, histograms and
+        bar plots, using a variety of datasets.
+      </i>
+    </p>
+
+    <h3 align = "center">
+      1: When Statistics Can Lie
+    </h3>
+
+    <p>
+      Copy the data file <a href = "anscombe.csv">anscombe.csv</a>, which is a
+      "CSV" (comma separated variable) file, with a header, containing a table of
+      eight columns, representing 11 sets of data pairs (x1,y1), (x2,y2), (x3,y3)
+      and (x4,y4).
+    </p>
+
+    <p>
+      1.1) Use the <b>read.csv()</b> command to read the <i>anscombe</i> dataset;
+      we suggest calling the resulting R variable ``A''.
+    </p>
+
+    <p>
+      1.2) We'd like to use a short name to refer to the data in each column
+      of the data.  Since the first column is labeled "x1", we are allowed
+      to refer to it using the name of the dataset followed by a $ sign
+      and the column label.  In other words, we could print the first column
+      by typing 
+      <pre>
+        print ( A$x1 )
+      </pre>
+      If you find this name a little too long, you can make a shorter name
+      for each column, using commands like
+      <pre>
+        x1 = A$x1
+        y1 = A$y1
+        ...
+        y4 = A$y4
+      </pre>
+      If you do this, then you can type the first column by the command
+      <pre>
+        print ( x1 )
+      </pre>
+      or even just
+      <pre>
+        x1
+      </pre>
+    </p>
+
+    <p>
+      1.3) We are going to try to get some numerical statistics about each
+      of the columns of the dataset.  The <b>mean()</b> function gives the
+      average value of a set of data, while <b>var()</b> returns the variance.
+      The variance is a measure of whether the data values tend to be close
+      to the average value or are spread apart.
+    </p>
+
+    <p>
+      For each of the variables x1, y1, x2, ..., y4, compute and record the
+      mean and variance.
+      <pre>
+               Mean       Variance                     Mean          Variance
+---------------------------------------------------------------------------------
+|    x1     |           |             |      y1     |             |             |
+---------------------------------------------------------------------------------
+|    x2     |           |             |      y2     |             |             |
+---------------------------------------------------------------------------------
+|    x3     |           |             |      y3     |             |             |
+---------------------------------------------------------------------------------
+|    x4     |           |             |      y4     |             |             |
+---------------------------------------------------------------------------------
+      </pre>
+      From these results, you may assume that the four sets of data pairs
+      are very similar.
+    </p>
+
+    <p>
+      1.4) Set up the linear model for each y variable as a function of the 
+      corresponding x variable.  The command 
+      <pre>
+        lm ( y1~x1 )
+      </pre>
+      does this for the first data set.  Typically, the straight line will
+      not go through all the data points.  The residual standard error is a 
+      measure of how much the data differs from the straight line, and a quantity
+      called "R-squared" reports how much of the data values can be represented
+      by the straight line.  Both of these quantities can be found out by using
+      the summary command, as in
+      <pre>
+        summary ( lm ( y1~x1 ) )
+      </pre>
+      Use this command for each set of data, in order to fill out the following
+      table, which describes the straight line that approximates each set of data,
+      and the amount by which the straight line and the data differ.
+    </p>
+
+    <p>
+      <pre>
+                                       Residual
+                                       Standard        Multiple
+               Slope       Intercept   Error           R-squared
+-------------------------------------------------------------------
+| lm(y1~x1) |           |             |             |             |
+-------------------------------------------------------------------
+| lm(y2~x2) |           |             |             |             |
+-------------------------------------------------------------------
+| lm(y3~x3) |           |             |             |             |
+-------------------------------------------------------------------
+| lm(y4~x4) |           |             |             |             |
+-------------------------------------------------------------------
+      </pre>
+    </p>
+
+    <p>
+      1.5) For each set of data pairs, make a plot showing the data pairs
+      as points, and the straight line determined by the <b>lm()</b>
+      command which approximates the points.  Here are the commands for
+      the first set of data:
+      <pre>
+        plot ( x1, y1 )
+        lines ( x1, slope * x1 + intercept )
+      </pre> 
+      You must replace "slope" and "intercept" by the slope and
+      intercept computed by the <b>lm()</b> command.
+    </p>
+
+    <p>
+      Notice that, although the four sets of data had very similar numerical
+      statistics, the plots instantly show that the data have great differences.
+      In particular:
+      <ol>
+        <li>
+          one of the datasets is well described by a straight line, but the
+          straight line we computed is the wrong one!  The calculation seems
+          to have been spoiled by one bad value;
+        </li>
+        <li>
+          one of the datasets is very strange.  The straight line we computed
+          does not seem to be a good representative of the actual data;
+        </li>
+        <li>
+          one of the datasets is not well described by a straight line; the data
+          seems to follow a pattern, but the pattern has a strong curve to it;
+        </li>
+        <li>
+          one of the datasets is seems to be fairly "noisy", but the straight
+          line we computed does a reasonable job of approximating the behavior.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      2: Searching for Possible Relationships
+    </h3>
+
+    <p>
+      Sometimes, a set of data involves many measurements of many cases.
+      For example, the data set we are about to consider involves eight
+      measurements made on 32 car models, including weight, engine displacement,
+      and highway mileage.  We are interested in finding relationship between
+      pairs of measurements; for example, we might suspect that cars with
+      greater weight tend to have lower highway mileage.  
+    </p>
+
+    <p>
+      When there are many measurements in a dataset, it may be hard to know 
+      which ones to try to relate.  However, the R <b>plot()</b> command, 
+      which we have already used to display pairs of <b>(x,y)</b> points,
+      can be used to make a quick survey of the data from which we might
+      be able to spot an interesting pattern.
+    </p>
+
+    <p>
+      Copy the data file <a href = "cars32.csv">cars32.csv</a>, which is a
+      "CSV" (comma separated variable) file, with a header, containing a table of
+      9 columns, including the model name and eight measurements, for 32 car models.
+    </p>
+
+    <p>
+      2.1) Use the <b>read.csv()</b> command to read the dataset;
+      we will assume you have called the resulting variable ``cars''.
+    </p>
+
+    <p>
+      2.2) This file has a header.  To see just the header information, we can type
+      <pre>
+        names ( cars )
+      </pre>
+      which indicates that the headers are
+      <pre>
+[1] "Car"          "Weight"       "Length"       "Braking"     
+[5] "Cylinders"    "Displacement" "City"         "Highway"     
+[9] "GHG"   
+      </pre>
+      in particular, "Braking" is the distance the car travels when braking from a speed of
+      60mph and "GHG" is the number of tons of greenhouse gases emitted by the
+      car in an average year.
+    </p>
+
+    <p>
+      The name of each car is stored under the first heading.  That means we can
+      get a list of the names by typing
+      <pre>
+        cars[1]
+      </pre>
+      which asks for column 1 of the dataset, or by typing
+      <pre>
+        cars[,1]
+      </pre>
+      which asks for all data which is in any row, and column 1.
+    </p>
+
+    <p>
+      If we wish to see that data for the Kia Spectra, which is in row 19 of the
+      dataset, we can type
+      <pre>
+        cars[19,]
+      </pre>
+      or, if we are interested only in a single data item, say, for the 
+      Chevy Malibu (row 8) we wish to know the braking distance (column 4), 
+      we can type
+      <pre>
+        cars[8,4]
+      </pre>
+    </p>
+
+    <p>
+      Using these ideas, what command is required to print out:
+      <ul>
+        <li>
+          the highway mileage of all cars?
+        </li>
+        <li>
+          all measurements for the Nissan Altima?
+        </li>
+        <li>
+          the engine displacement of the Audi A6?
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      2.3) We know that if two variables, x and y, are exactly related by a simple linear
+      formula, then plotting sample pairs of (x,y) will produce points that lie
+      on a straight line.  If the line rises from left to right, then x and y increase
+      together; if the line falls, this means that as one variable increases, the other
+      decreases.
+    </p>
+
+    <p>
+      The data we will examine is unlikely to satisfy an exact linear relationship.
+      However, we may be able to spot situations in which two variables seem to have
+      a strong linear tendency, that is, the set of plotted points tends to form a
+      straight line; if such a relationship seems to be suggested, it is also interesting
+      to note whether the variables rise together or not.
+    </p>
+
+    <p>
+      The following diagrams suggest the ways that such a plot might look, where,
+      for example, the x1 axis might represent "Length" and the y1 axis "Weight"
+      for the car data:
+      <pre>
+         +--------------------+     +----------o---------+     +--------------------+
+         |             oo  o o|     |                    |     o                    |
+         |           o   o    |     | o    oo            |     |o                   |
+         |              o     |     |   o       o      oo|     |oooo                |
+        y|       oo o         |    y|    oo o     o      |    y|o    o              |
+        1|      o  o          |    2|     o         o o  |    3|  ooo  o  o         |
+         |    o  ooo          |     o   o     o          |     |       o o          |
+         | o  o               |     |     oo          o  |     |        o   o       |
+         o   ooo              |     |             oo     |     |           o  o  o  |
+         +-o------------------+     +------o-------------+     +-----------------o--+
+                x1                          x2                          x3
+      </pre>
+      You should see that in the (x1,y1) plot, the data suggests that there is some
+      relationship between x1 and y1, that it is approximately linear, and that y1 
+      tends to rise as x1 does, in a linear fashion.  If x1 is the car length, and
+      y1 is the car weight, then this fact is probably obvious.  But the point is,
+      we didn't have to know what the variables were in order to see a relationship
+      from the plot.  Meanwhile, the plot of (x2,y2) data seems to show no
+      obvious pattern, while the (x3,y3) plot suggests a linear relationship in
+      which y3 decreases as x3 increases.
+    </p>
+
+    <p>
+      Surprisingly, R will let you plot all pairs of data against each other in
+      a single plot.  You just have to use the name of the dataset in the plot
+      command.  For our dataset, the command would be:
+      <pre>
+        plot ( cars )
+      </pre>
+    </p>
+
+    <p>
+      This produces an 8 by 8 table of miniplots.  The miniplot in row I, column J
+      uses the I-th variable for the y axis, and the J-th variable for the x axis.
+      Thus, the miniplot in the second row, column
+      three, represents Weight (the y axis) as a function of Length (the x axis).
+      This plot seems to show an increasing linear relation between the two variables.
+    </p>
+
+    <p>
+      On the other hand, the plot in row 2, column 4 seems to show no particular
+      relationship at all.  This suggests, surprisingly, that we shouldn't expect
+      that the braking distance and the weight have any obvious relationship.
+    </p>
+
+    <p>
+      The "cylinders" data is a little unusual, since it can only have the values
+      4, 6, and 8.  However, it is possible even for this data to spot a roughly
+      linear relationship.  Look at row 2, column 5, which plots the number of cylinders
+      on the x axis, and the car weight on the y axis.  Even though the data is 
+      fairly spread out, it is still possible to see that, in general, the weight
+      rises in a linear fashion as the number of cylinders increases.
+    </p>
+
+
+    <p>
+      Make a judgment, based on the plots, for each pair of data items, whether you see 
+      NO relationship (0), a RISING linear relationship (+1), or a FALLING 
+      linear relationship (-1).  The table below corresponds to the miniplots
+      above the diagonal line on the plot.  (We don't need to look at the
+      miniplots below the diagonal, since they will have essentially the
+      same information, although "flipped over".)  The first few entries have
+      been filled in for you.
+<pre>
+Weight ___+1_______  ___0________  ___+1_______  ____________  ____________  ____________  ____________
+       Length        ____________  ____________  ____________  ____________  ____________  ____________
+                     Braking       ____________  ____________  ____________  ____________  ____________
+                                   Cylinders     ____________  ____________  ____________  ____________
+                                                 Displacement  ____________  ____________  ____________
+                                                               City          ____________  ____________
+                                                                             Highway       ____________  
+                                                                                           GHG
+</pre>
+    </p>
+
+    <p>
+      2.4) We have already said that we detect a linear relationship between car length
+      and weight.  Use the <b>lm()</b> command to determine the linear formula that
+      best approximates car weight as a linear function of car length:
+      <pre>
+        weight = intercept + slope * length
+      </pre>
+    </p>
+
+    <p>
+      2.5) Use the <b>plot()</b> command to display the car weight as a function of
+      car length.  Then use the command <b>abline(intercept,slope)</b> to display
+      your linear formula on the same plot.  You should expect that the line approximates
+      the data well.
+    </p>
+
+    <h3 align = "center">
+      3: Estimating Probability from Frequency
+    </h3>
+
+    <p>
+      Sometimes we are not looking for a relationship between two items of data, but
+      rather are given the results of many repetitions of an experiment, the yearly
+      record of total snowfall, the heights of every person in the sophomore class, 
+      or some other measurement.  Sometimes the results may naturally group themselves,
+      as when we are rolling a pair of dice, and only 11 outcomes are possible.  In
+      other cases, our results might be measurements with 4 or 5 digits of accuracy,
+      so that often any result occurs only once in our dataset.
+    </p>
+
+    <p>
+      Especially for the case of dice, it is easy to think of the data as representing
+      the observed <i>frequency</i> of each result.  For the multiple digit measurements,
+      we might need to group the data into ranges before we can naturally talk about
+      frequencies.  However, it is natural to assume that if we gather enough data,
+      then the frequencies of events we have already observed gives us a way to estimate
+      the <i>probability</i> of the occurrence of another event of the same type.
+    </p>
+
+    <p>
+      We will look at the use of histograms to display and analyze frequency data,
+      and consider some simple changes to the frequency plot that make it easy to
+      see the underlying probabilities.  Indeed, R has a feature that allows us to
+      "guess" a smooth probability curve that will describe our data in a convincing way.
+    </p>
+
+    <p>
+      Copy the data file <a href = "nile.csv">nile.csv</a>, which is a
+      "CSV" (comma separated variable) file, with a header, containing a year index
+      and the maximum height of the Nile river at flood stage, over the course
+      of 570 years.
+    </p>
+
+    <p>
+      3.1) Use the <b>read.csv()</b> command to read the <i>nile</i> dataset;
+      we suggest calling the resulting R variable ``nile''.  
+    </p>
+
+    <p>
+      3.2) Use the <b>plot()</b> command to make a "scatter plot" of the "Year" variable 
+      versus the "Flood" variable.  You may think that the result is almost a random
+      sequence of points.  
+    </p>
+
+    <p>
+      3.3) Use the <b>lines()</b> command to make a line plot of the "Year" variable 
+      versus the "Flood" variable.  By connecting successive points with lines, the
+      line plot gives us a little better feeling for what is going on, but there is
+      really too much data here to comprehend.  In particular, we might be less interested
+      in the exact history of the Nile floods and more interested in the average flood
+      height and how much variation there is likely to be in this value.
+    </p>
+
+    <p>
+      3.4) Since each record in our dataset represents a single measurement, we can simply
+      make a histogram of the data.  For our data, this might be a two step process:
+      we might first choose 11 "bins", starting with 8.5 to 9.0, then 9.0 to 9.5, and so
+      on up to 13.5 to 14.0  Then we can go through our 570 data records and assign each
+      value to its corresponding bin.   This gives us a frequency table, of how often
+      each bin was used.  Use the R command <b>hist()</b> to create a histogram of the
+      data in this way.  If you simply supply the name of the "Flood" variable as the input,
+      R will automatically set up the bins, count the frequencies, and create the plot.
+    </p>
+
+    <p>
+      3.5) It might seem that we could get more information by using smaller bins.
+      R calls the number of bins "breaks", and if you don't like the number of bins R
+      used, you can specify the value you want instead by adding the information 
+      to the <b>plot()</b> command.  Create a new histogram of the Flood data using
+      35 bins or breaks.  Notice that the bars now seem to go up and down in a somewhat
+      irregular fashion.  If we increase the number of bins, this kind of behavior
+      will get worse.
+    </p>
+
+    <p>
+      3.6) It is natural to assume that if we had an "infinite" amount of data,
+      our histogram bars would "behave", and we could increase the number of breaks
+      as much as we wanted, and we would see a smooth curve emerging, which would
+      represent the actual probability (based on our data) of each event occurring.
+      R can actually approximate this feature, even though we don't have an infinite
+      amount of data, by making some reasonable estimates of what is going on.
+    </p>
+
+    <p>
+      In order to illustrate this feature, we must first realize that the default histogram
+      shows us a frequency plot, but that for probability we really need to divide by
+      the number of data values, to get a probability estimate.  R will rescale our
+      histogram for us if we simple add the switch ", freq = F" to the <b>plot()</b> command.
+      Ask R to redraw the 35 breaks plot, but this time incude this new switch.
+      What has changed in the plot?
+    </p>
+
+    <p>
+      3.7) Now, to show how R can estimate the underlying probability pattern of the data,
+      issue the command <b>lines ( density(nile$Flood) )</b>.  Assuming your histogram
+      was still on the screen, your plot will now have both the probability histogram,
+      plus a smooth curve that is R's model for the probability of any value of the 
+      flood height, based on the finite amount of data we supplied.
+    </p>
+
+    <h3 align = "center">
+      4: Using Bar Plots
+    </h3>
+
+    <p>
+      The histograms we used in the previous section are sometimes confused with bar plots.
+      While they are closely related, we normally think of histograms as a way to represent
+      the frequency of occurrence of some kind of numerical data, so that the x-axis
+      is numeric, whereas a bar plot is a set of bars whose height tells us the relative
+      value of certain things, where each thing might simply be a named object.
+      In this example, we will create a bar plot in which the named objects
+      are a set of politicians.  Moreover, it is common to add information to
+      a bar plot by dividing the bar into sub-bars, or placing several bars together
+      that represent related measurements for the named object.  These features make
+      bar plots significantly different from histograms.
+    </p>
+
+    <p>
+      Copy the data file <a href = "republicans_2012.csv">republicans_2012.csv</a>, which is a
+      "CSV" (comma separated variable) file, with a header, containing the results of a poll
+      in which Republicans, Democrats and Independents were asked if they were "favorable",
+      "unfavorable", "had no opinion" or "did not know the person", for each of five
+      proposed candidates, who, at that time, were Sarah Palin, Mike Huckabee, Mitt Romney,
+      Newt Gingrich, and Oprah Winfrey.  The data file also includes a percentage for
+      the Overall results, that is, averaged over all three parties.  This means the
+      dataset includes 20 rows and 6 columns of data.
+    </p>
+
+    <p>
+      4.1) Use the <b>read.csv()</b> command to read the <i>republicans_2012</i> dataset;
+      we suggest calling the resulting R variable <i>rep</i>.  
+    </p>
+
+    <p>
+      4.2) By typing the name of the variable, you can see that the dataset contains
+      both character information (the party, and the candidate), and numeric information
+      (the percentages).  The <b>barplot()</b> command only accepts numeric data,
+      so it will be much easier for us if we make a copy of the numerical subset of
+      the data.  The numerical subset occurs in rows 1 to 20 (in other words, all rows), 
+      and columns 3 to 6.  Create a new numerical array called <i>repn</i> by using the 
+      <b>as.matrix()</b> command:
+      <pre>
+        repn = as.matrix ( rep[1:20,3:6] )
+      </pre>
+      or, simply
+      <pre>
+        repn = as.matrix ( rep[,3:6] )
+      </pre>
+      Now, if you type <b>repn</b> to display this new object, it only contains
+      numeric data.
+    </p>
+
+    <p>
+      4.3) Row 1 of the matrix contains the favorable, unfavorable, no opinion,
+      and don't know responses by Republican party members when asked about Sarah Palin.
+      We can display these four numbers as bars by calling the <b>barplot()</b> function,
+      and specifying that we want to display just the first row of the matrix:
+      <pre>
+        barplot ( repn[1,1:4] )
+      </pre>
+      or, simply
+      <pre>
+        barplot ( repn[1,] )
+      </pre>
+    </p>
+
+    <p>
+      4.4) Column 2 contains the unfavorable responses.  Rows 6 through 10 contain the
+      unfavorable responses by Democrats when asked about each of the five candidates.
+      Display these five numbers as bars:
+      <pre>
+        barplot ( repn[6:10,2] )
+      </pre>
+    </p>
+
+    <p>
+      4.5) Now we would like to make a more complicated plot, in which each bar is
+      divided into pieces that represent, for each candidate, the favorable, unfavorable, 
+      no opinion and don't know percentages of the responses.  Unfortunately, the easiest 
+      way to make this happen requires that these four percentages be lined up in a
+      <i>column</i> of the matrix, not a row!  The <b>t()</b> command in R will
+      flip a numeric array in exactly the way we need.  Let's make a new copy of the
+      data that has percentages as columns:
+      <pre>
+        rept = t ( repn )
+      </pre> 
+    </p>
+
+    <p>
+      Now, if we wish to see in a single plot all the responses to all the candidates
+      as given by Independent voters, this information is now stored in rows 1 to 4, 
+      and columns 11 to 15.  And the information has the right shape for <b>barplot()</b>
+      to create what are called "stacked bars":
+      <pre>
+        barplot ( rept[1:4,11:15] )
+      </pre>
+    </p>
+
+    <p>
+      4.6) In our example, the four responses were percentages that should add to 100.
+      In other cases, the several values associated with each object migght be unrelated,
+      and it might not make sense to stack them.  In that case, you can simply tell
+      <b>barplot()</b> to display a group of bars for each object we are considering,
+      by specifying that the "beside" option is TRUE:
+      <pre>
+        barplot ( rept[1:4,11:15], beside = T )
+      </pre>
+    </p>
+
+    <hr>
+
+    <i>
+      Last modified on 20 October 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>
+ 

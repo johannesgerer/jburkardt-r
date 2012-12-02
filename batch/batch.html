@@ -1,0 +1,229 @@
+<html>
+
+  <head>
+    <title>
+      BATCH - Examples of Running R Programs in Batch
+    </title>
+  </head>
+
+  <body bgcolor="#eeeeee" link="#cc0000" alink="#ff3300" vlink="#000055">
+
+    <h1 align = "center">
+      BATCH <br> Examples of Running R Programs in Batch
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>BATCH</b> contains R programs which
+      illustrate how an R program can be executed in batch mode.
+    </p>
+
+    <p>
+      In particular, a file might be created, called "example1.r", and containing
+      the commands:
+      <pre>
+x <- c(1,2,3,4,5,6)   # Create ordered collection (vector)
+y <- x^2              # Square the elements of x
+print(y)              # print (vector) y
+mean(y)               # Calculate average (arithmetic mean) of (vector) y; result is scalar
+var(y)                # Calculate sample variance
+lm_1 <- lm(y ~ x)     # Fit a linear regression model "y = f(x)" or "y = B0 + (B1 * x)" 
+                      # store the results as lm_1
+print(lm_1)           # Print the model from the (linear model object) lm_1
+summary(lm_1)         # Compute and print statistics for the fit of the (linear model object) lm_1 par(mfrow=c(2, 2))    # Request 2x2 plot layout
+q()                   # quit
+      </pre>
+    </p>
+
+    <p>
+      On a UNIX system, the R program could be invoked to carry out these commands,
+      using a UNIX shell script that might read:
+      <pre>
+        R --vanilla < example1.r > example1_output.txt
+      </pre>
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Joseph Adler,<br>
+          R in a Nutshell,<br>
+          O'Reilly, 2009,<br>
+          ISBN13: 978-0-596-80170-0.
+        </li>
+        <li>
+          <a href = "http://www.r-project.org/">
+                     http://www.r-project.org</a>, 
+          the official R web site.
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "example1.r">example1.r</a>, 
+          a sample R file;
+        </li>
+        <li>
+          <a href = "example1.sh">example1.sh</a>, 
+          a BASH shell script to run R with the input file.
+        </li>
+        <li>
+          <a href = "example1_output.txt">example1_output.txt</a>, 
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <ul>
+        <li>
+          <a href = "example2.r">example2.r</a>, 
+          a sample input file;
+        </li>
+        <li>
+          <a href = "survey.txt">survey.txt</a>, 
+          a data file to be analyzed.
+        </li>
+        <li>
+          <a href = "example2_output.txt">example2_output.txt</a>, 
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>EXAMPLE3</b> requires that the library <b>caTools</b> be installed.
+      <ul>
+        <li>
+          <a href = "example3.r">example3.r</a>, 
+          a sample input file;
+        </li>
+        <li>
+          <a href = "example3_output.txt">example3_output.txt</a>, 
+          the output file.
+        </li>
+        <li>
+          <a href = "mandelbrot.gif">mandelbrot.gif</a>, 
+          an image of the Mandelbrot set, created by the commands.
+        </li>
+        <li>
+          <a href = "mandelbrot-0.png">mandelbrot-0.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-1.png">mandelbrot-1.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-2.png">mandelbrot-2.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-3.png">mandelbrot-3.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-4.png">mandelbrot-4.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-5.png">mandelbrot-5.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-6.png">mandelbrot-6.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-7.png">mandelbrot-7.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-8.png">mandelbrot-8.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-9.png">mandelbrot-9.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-10.png">mandelbrot-10.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-11.png">mandelbrot-11.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-12.png">mandelbrot-12.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-13.png">mandelbrot-13.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-14.png">mandelbrot-14.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-15.png">mandelbrot-15.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-16.png">mandelbrot-16.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-17.png">mandelbrot-17.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-18.png">mandelbrot-18.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href = "mandelbrot-19.png">mandelbrot-19.png</a>, 
+          a PNG version.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../r.html">
+      the R page</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last modified on 08 July 2010
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>
+ 

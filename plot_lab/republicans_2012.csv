@@ -1,0 +1,21 @@
+"Party", "Candidate", "Favorable", "Unfavorable", "No Opinion", "Who?"
+"Republican",  "Palin",    70, 21,  8,  1
+"Republican",  "Huckabee", 63, 15, 17,  5
+"Republican",  "Romney",   60, 16, 16,  8
+"Republican",  "Gingrich", 58, 23, 13,  5
+"Republican",  "Winfrey",  46, 39, 14,  1
+"Democrat",    "Palin",    25, 62,  9,  4
+"Democrat",    "Huckabee", 28, 30, 21, 20
+"Democrat",    "Romney",   20, 36, 16, 29
+"Democrat",    "Gingrich", 19, 54, 10, 17
+"Democrat",    "Winfrey",  80, 12,  8,  0
+"Independent", "Palin",    49, 38, 11,  1
+"Independent", "Huckabee", 44, 28, 17, 11
+"Independent", "Romney",   35, 34, 18, 12
+"Independent", "Gingrich", 38, 40, 16,  6
+"Independent", "Winfrey",  55, 29, 15,  1
+"Overall",     "Palin",    47, 42, 10,  2
+"Overall",     "Huckabee", 45, 23, 19, 13
+"Overall",     "Romney",   38, 27, 18, 17
+"Overall",     "Gingrich", 38, 38, 14, 10
+"Overall",     "Winfrey",  61, 26, 12,  1

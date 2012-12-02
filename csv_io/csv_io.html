@@ -1,0 +1,279 @@
+<html>
+
+  <head>
+    <title>
+      CSV_IO - Reading or Writing Comma Separated Value (CSV) Files in R
+    </title>
+  </head>
+
+  <body bgcolor="#eeeeee" link="#cc0000" alink="#ff3300" vlink="#000055">
+
+    <h1 align = "center">
+      CSV_IO <br> Reading or Writing Comma Separated Value (CSV) Files in R
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>CSV_IO</b> contains R programs which
+      illustrate how one can read or write comma separated value (CSV) files.
+    </p>
+
+    <p>
+      Briefly, R includes a special command <b>read.csv()</b> specifically for reading CSV files:
+      <pre>
+        <i>name</i> &lt;- <b>read.csv</b> ( "<i>filename.csv</i>",
+          <b>header</b> = TRUE <i>or</i> FALSE ) 
+      </pre>
+      or, the more general <b>read.table()</b> function can be used:
+      <pre>
+        <i>name</i> &lt;- <b>read.table</b> ( "<i>filename.csv</i>",
+          <b>header</b> = TRUE <i>or</i> FALSE,
+          <b>sep</b> = "," <i>or</i> <b>sep</b> = " " <i>or</i> <b>sep</b>= "\t" ) 
+      </pre>
+    </p>
+
+    <p>
+      The simplest example of a comma separated value file involves numeric
+      data, with the same number of values occurring on each row.  Thus, we might
+      have three rows of data, each containing 10 values, with successive values
+      separated by commas (which R specifies by <b>sep</b>=","):
+      <pre>
+1,2,3,4,5,6,7,8,9,10
+11,12,13,14,15,16,17,18,19,20
+21,22,23,24,25,26.27.28.29,30
+      </pre>
+    </p>
+
+    <p>
+      Variations on this approach use the TAB character (which R specifies by <b>sep</b>="\t")
+      to separate the values:
+      <pre>
+1	2	3	4	5	6	7	8	9	10
+11	12	13	14	15	16	17	18	19	20
+21	22	23	24	25	26	27	28	29	30
+      </pre>
+      or one or more spaces (which R specifies by <b>sep</b>=" ":
+      <pre>
+ 1  2  3  4  5  6  7  8  9 10
+11 12 13 14 15 16 17 18 19 20
+21 22 23 24 25 26 27 28 29 30
+      </pre>
+    </p>
+
+    <p>
+      Sometimes the first row of a CSV file is used to give labels to the columns.
+      In this case, the command to read the file should specify <b>header</b>=TRUE:
+      <pre>
+        "Age", "Weight in Pounds"
+        0,  8.4
+        1, 16.8
+        2, 24.5
+        3, 37.0
+        4, 49.0
+        5, 63.0
+      </pre>
+
+    <p>
+      A <b>data frame</b> is a table of data that may include row or column labels as well.
+      For instance, the <b>FAMILY</b> example defines a data frame of 4 properties of
+      7 individuals, which can be represented as the following table, where items in
+      <b>bold face</b> are labels:
+      <table>
+        <tr>
+          <th></th><th>First name</th><th>Age</th><th>Height (inches)</th><th>Weight (pounds)</th>
+        </tr>
+        <tr>
+          <th>Dad</th><td>Horace</td><td>45</td><td>71</td><td>230</td>
+        </tr>
+        <tr>
+          <th>Mom</th><td>Gladys</td><td>43</td><td>66</td><td>158</td>
+        </tr>
+        <tr>
+          <th>Big Bro</th><td>Marco</td><td>22</td><td>73</td><td>190</td>
+        </tr>
+        <tr>
+          <th>Big Sis</th><td>Desiree</td><td>20</td><td>69</td><td>150</td>
+        </tr>
+        <tr>
+          <th>Me</th><td>Arnold</td><td>17</td><td>69</td><td>165</td>
+        </tr>
+        <tr>
+          <th>Punk Sis</th><td>Darleen</td><td>15</td><td>67</td><td>120</td>
+        </tr>
+        <tr>
+          <th>Dog</th><td>Blotch</td><td>3</td><td>12</td><td>15</td>
+        </tr>
+      </table>
+      If this data frame is written to a CSV file, the first row of the file 
+      contains column labels, and the subsequent rows each begin with the row label followed
+      by the data for that row.
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Languages:
+    </h3>
+
+    <p>
+      <b>CSV_IO</b> is available in
+      <a href = "../../f_src/csv_io/csv_io.html">a FORTRAN90 version</a> and
+      <a href = "../../r_src/csv_io/csv_io.html">an R version</a>.
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../r_src/xls_io/xls_io.html">
+      XLS_IO</a> 
+      R programs which
+      illustrate how data can be shared between Microsoft EXCEL and R,
+      using XLS and CSV files.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Joseph Adler,<br>
+          R in a Nutshell,<br>
+          O'Reilly, 2009,<br>
+          ISBN13: 978-0-596-80170-0.
+        </li>
+        <li>
+          <a href = "http://www.r-project.org/">
+                     http://www.r-project.org</a>, 
+          the official R web site.
+        </li>
+        <li>
+          <a href = "http://cran.r-project.org/doc/manuals/R-data.pdf">
+                     http://cran.r-project.org/doc/manuals/R-data.pdf</a>, 
+          R Data Import/Export
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>PLAYERS</b> is an example involving the highest salaried football players.
+      The data includes first and last name, team, position, and salary, for 5 players.
+      The file includes an initial row of column labels.  The data is separated by commas.
+      <ul>
+        <li>
+          <a href = "create_players.R">create_players.R</a>, 
+          defines the data and assigns it to a data frame.
+        </li>
+        <li>
+          <a href = "write_players.R">write_players.R</a>, 
+          writes the data frame to the file "players.csv".
+        </li>
+        <li>
+          <a href = "read_players.R">read_players.R</a>, 
+          reads the data frame from the file "players.csv".
+        </li>
+        <li>
+          <a href = "players.csv">players.csv</a>, 
+          the comma separated value file containing the player information.
+        </li>
+        <li>
+          <a href = "players_output.txt">players_output.txt</a>, 
+          the output file created by executing create_players.R,
+          write_players.R and read_players.R.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>NUMBERS</b> is an example in which no column or row labels are used, and
+      all the data is numeric, consisting of 3 rows of 10 numbers.  The basic file
+      uses commas to separate the data, but two related files use tabs or spaces
+      instead.
+      <ul>
+        <li>
+          <a href = "numbers.csv">numbers.csv</a>, 
+          the comma separated value file containing the numbers.
+        </li>
+        <li>
+          <a href = "numbers_tab.csv">numbers_tab.csv</a>, 
+          the tab separated value file containing the numbers.
+        </li>
+        <li>
+          <a href = "numbers_space.csv">numbers_space.csv</a>, 
+          the space separated value file containing the numbers.
+        </li>
+        <li>
+          <a href = "read_numbers.R">read_numbers.R</a>, 
+          reads and prints the data from all three files.
+        </li>
+        <li>
+          <a href = "numbers_output.txt">numbers_output.txt</a>, 
+          the output file created by executing read_numbers.R.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>FAMILY</b> is an example in which column and row labels are used.
+      In fact, the default labels used by R are replaced by user-chosen values.
+      The values and labels are written to the CSV file, and read back.
+      <ul>
+        <li>
+          <a href = "create_family.R">create_family.R</a>, 
+          defines the data, assigns it to a data frame,
+          and replaces the default row and column labels by user-chosen values.
+        </li>
+        <li>
+          <a href = "write_family.R">write_family.R</a>, 
+          writes the data frame to the file "family.csv".
+        </li>
+        <li>
+          <a href = "read_family.R">read_family.R</a>, 
+          reads the data frame from the file "family.csv".
+        </li>
+        <li>
+          <a href = "family.csv">family.csv</a>, 
+          the comma separated value file containing the data, as well as
+          row and column labels.
+        </li>
+        <li>
+          <a href = "family_output.txt">family_output.txt</a>, 
+          the output file created by executing create_family.R,
+          write_family.R and read_family.R.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../r.html">
+      the R page</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last modified on 25 August 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>
+ 

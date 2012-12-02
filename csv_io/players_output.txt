@@ -1,0 +1,43 @@
+> setwd ( '/Users/jburkardt/public_html/r_src/csv_io')
+> source ( 'create_players.R')
+
+CREATE_PLAYERS
+  Create data vectors about top NFL salaries
+  Put the data into a data frame
+  Print the data
+
+  name.last name.first     team position   salary
+1   Manning     Peyton    Colts       QB 18700000
+2     Brady        Tom Patriots       QB 14626720
+3    Pepper     Julius Panthers       DE 14137500
+4    Palmer     Carson  Bengals       QB 13980000
+5   Manning        Eli   Giants       QB 12916666
+
+CREATE_PLAYERS
+  Normal end of execution.
+> source ( 'write_players.R')
+
+WRITE_PLAYERS
+  Assuming a players data frame has already been created
+  write the data frame to a file.
+
+  The data frame was written to the file "players.csv".
+
+WRITE_PLAYERS
+  Normal end of execution.
+> source ( 'read_players.R')
+
+READ_PLAYERS
+  Read the information in the file "players.csv"
+  and print it.
+
+  name.last name.first     team position   salary
+1   Manning     Peyton    Colts       QB 18700000
+2     Brady        Tom Patriots       QB 14626720
+3    Pepper     Julius Panthers       DE 14137500
+4    Palmer     Carson  Bengals       QB 13980000
+5   Manning        Eli   Giants       QB 12916666
+
+READ_PLAYERS
+  Normal end of execution.
+> q()

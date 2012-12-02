@@ -1,0 +1,317 @@
+<html>
+
+  <head>
+    <title>
+      LINEAR_LAB - Linear Relationships between Pairs of Data
+    </title>
+  </head>
+
+  <body bgcolor="#eeeeee" link="#cc0000" alink="#ff3300" vlink="#000055">
+
+    <h1 align = "center">
+      LINEAR_LAB <br> Linear Relationships between Pairs of Data
+    </h1>
+
+    <hr>
+      http://people.sc.fsu.edu/~jburkardt/public_html/r_src/linear_lab/linear_lab.html
+    <hr>
+
+    <h3 align = "center">
+      1: The Taxicab Fare Data:
+    </h3>
+
+    <p>
+      Copy the data file <a href = "tally_cab.csv">tally_cab.csv</a>, which is a
+      "CSV" (comma separated variable) file, with a header, containing a table of
+      several taxicab rides, including the miles traveled and the fare charged.
+      In part 1 of this lab, you will read this data into R, plot it, and then
+      try to establish a relationship between the miles traveled and the fare paid.
+    </p>
+
+    <p>
+      1.1) Use the <b>read.csv()</b> command to read the taxicab 
+      data from the file <i>'tally_cab.csv'</i>, storing it in a variable.  We suggest 
+      using the name <i>taxi</i> for this variable.  
+    </p>
+
+    <p>
+      1.2) Use the <b>print()</b> statement to print a listing of <i>taxi</i>,
+      which will include a header line with labels <i>distance</i> and <i>fare</i>, 
+      followed by 8 numbered lines of data.  Each column of the data can be identified
+      by its header.  For instance, the first column has the name <i>taxi$distance</i>.
+      Use the <b>print()</b> command again, but this time only print <i>taxi$distance</i>.
+    </p>
+
+    <p>
+      1.3) Use the <b>plot()</b> command to display the <i>taxi</i> data.  This should produce
+      a graphical image in which each data value appears as a small circle.
+    </p>
+
+    <p>
+      1.4) We expect that there is a simple relationship between the distance
+      traveled and the fare charged.  For instance, this relationship might be
+      simply that there is a 3 dollar charge per mile.  Before we explore the 
+      relationship, make a copy of the distance data with the shortened name of <i>x</i>:
+      <pre>
+        x <- taxi$distance
+      </pre>
+      If the cab driver charged 3 dollars per mile, then we could compute the
+      fare for each of these trips by the following mathematical formula:
+      <pre>
+        y1 = 3 * x
+      </pre>
+      To actually evaluate this formula on our data, the corresponding R command is
+      simply
+      <pre>
+        y1 <- 3 * x
+      </pre>
+      Now add a line to your current plot, displaying this guess for the relationship
+      between the distance and fare, using the command:
+      <pre>
+        lines ( x, y1 )
+      </pre>
+      The plot suggests that the formula is not very accurate, especially for the
+      trip that took the greatest distance.
+    </p>
+
+    <p>
+      1.5) R includes a function called <b>lm()</b> which can search for a linear 
+      relationship between two data vectors.  If the data items are called <i>x</i> and <i>y</i>, 
+      then the relationship is approximately explained by the following mathematical formula:
+      <pre>
+        y = <i>slope</i> * x + <i>intercept</i>
+      </pre>
+      Given sets of data <i>x</i> and <i>y</i>, the R command <b>lm(y~x)</b> will search for 
+      values of <i>slope</i> and <i>intercept</i> that most closely match the
+      data, to show <i>y</i> as a linear function of <i>x</i>.  To find this relationship
+      for our data, use the <b>lm()</b> command to ask for a linear relationship
+      that represents <i>taxi$fare</i> as a function of <i>taxi$distance</i>.
+    </p>
+
+    <p>
+      1.6) The output of the <b>lm()</b> command should include an intercept
+      and a slope, (which R will call the "coefficient of taxi$distance").  
+      Earlier, you made a copy of <i>taxi$distance</i> and called it <i>x</i>.
+      Using the values of <i>intercept</i> and <i>slope</i> reported by <b>lm()</b>, compute
+      the estimated taxi fares:
+      <pre>
+        y2 <- <i>slope</i> * x + <i>intercept</i>
+      </pre>
+      and add this second line to your current plot using the command
+      <pre>
+        lines ( x, y2 )
+      </pre>
+      Your plot should now contain points for the actual data, and two lines
+      that represent extimates for the relationship between the data values.
+    </p>
+
+    <p>
+      <i>(Note that the actual taxicab rates in Tallahassee specify an initial 
+      charge of 2 dollars, and 25 cents for each 1/10 of a mile traveled.)</i>
+    </p>
+
+    <h3 align = "center">
+      2: The Size and Weight of Lead Shot:
+    </h3>
+
+    <p>
+      Copy the data file <a href = "lead_shot.csv">lead_shot.csv</a>, which is a
+      "CSV" (comma separated variable) file, with a header, containing a table of
+      the type, size, and weight of various kinds of lead shot.
+      In part 2 of this lab, you will read this data into R, plot it, and then
+      try to establish a relationship between the measured diameter <i>d</i> and
+      weight <i>w</i>.  We will find that this relationship is not linear, but
+      that if we modify the data in the right way, R will be able to find a
+      simple relationship for us.
+    </p>
+
+    <p>
+      2.1) Use the <b>read.csv()</b> command to read the data from the file 
+      <i>'lead_shot.csv'</i>, storing it in a variable.  We suggest using the name 
+      <i>shot</i> for this variable.  
+    </p>
+
+    <p>
+      2.2) Use the <b>print()</b> statement to print a listing of the <i>shot</i> data.
+    </p>
+
+    <p>
+      The columns of interest to us are the weight in ounces (column 2, "ounce"), the
+      diameter in inches (column 4, "inch"), and a measurement called "PPO" (column 6, "ppo").
+      To refer to any column of the data, you can use the name of the data, joined
+      by a dollar sign and the column heading.  Thus, the weight data can be referred
+      to by the name <i>shot$ounce</i>.  For convenience, make temporary copies of
+      these columns of the data, called <i>d</i> for "diameter", <i>w</i> for "weight",
+      and <i>ppo</i> for "ppo".  For instance, your first command might be:
+      <pre>
+        d <- shot$inch
+      </pre>
+    </p>
+
+    <p>
+      2.3) Use the <b>plot()</b> command to display the <i>d</i> data on the
+      <i>x</i> axis, versus the <i>w</i> data on the <i>y</i> axis.  
+      By looking at the graph, you may conclude that this is probably <u>not</u> a 
+      linear relationship.
+    </p>
+
+    <p>
+      2.4) The plot command allows us to request plots in which formulas or
+      expressions are involved.  In particular, we can make a plot of the square
+      of <i>d</i> versus <i>w</i> simply by using the command:
+      <pre>
+        plot ( d^2, w )
+      </pre>
+      Make this plot of <i>d^2</i> versus <i>w</i>.  Then plot <i>d^3</i> versus
+      <i>w</i>.  In the second plot, the data seems to form a straight line.  
+      This suggests there is a relationship that can be expressed in the
+      mathematical formula:
+      <pre>
+        w = slope * d^3 + intercept
+      </pre>
+    </p>
+
+    <p>
+      2.5) Just like the <b>plot()</b> command, we can ask the <b>lm()</b> command
+      to find a relationship in which we have squared or cubed one of the variables.
+      Use the <b>lm()</b> command to find a relationship for <i>w</i> in terms of
+      <i>d^3</i>.  What are the values of <i>slope</i> and <i>intercept</i>?
+    </p>
+
+    <p>
+      2.6) Use the <b>plot()</b> command to plot <i>w</i> versus <i>ppo</i>.
+      The data seems to lie on a sharply curved figure, not a straight line.
+      In fact, as the size of <i>w</i> increases, <i>ppo</i> decreases.
+      This is sometimes called an <i>"inverse"</i> relationship.  Use the
+      <b>plot()</b> command again, but this time plot <i>w</i> versus <i>1/ppo</i>,
+      and notice that now there seems to be a simple relationship between the
+      two quantities.
+    </p>
+
+    <p>
+      <i>(The relationship between the diameter and weight of a typical lead shot pellet
+      is not linear.  However, we found that there <u>was</u> a linear relationship between
+      the weight and a <u>power</u> of the diameter.  The R command <b>lm()</b> can usually
+      work out the details of such a linear relationship, if we can find a new way
+      of looking at the data that makes the linear relationship evident.)</i>
+    </p>
+
+    <h3 align = "center">
+      3: Predicting a Giant
+    </h3>
+
+    <p>
+      Copy the data file <a href = "height_male_young.csv">height_male_young.csv</a>,
+      which is a "CSV" (comma separated variable) file with a header, 
+      containing a table of heights, in inches, for young males between
+      the ages of 0 and 20.  In fact, the table has 9 columns of height
+      data.  The column labeled "p50" lists the median height, that is,
+      the height for which 50 percent of males are above, and 50 percent
+      below.  Similarly, the "p25" column lists a height which 25 percent
+      of males are below.
+    </p>
+
+    <p>
+      We will concentrate on the "p50" column.  By plotting this data,
+      we will notice a linear relationship that seems to hold over most
+      of the range of ages.  We will try to determine that linear relationship,
+      and then use it to predict the height of a male at age 40.
+    </p>
+
+    <p>
+      3.1) Use the <b>read.csv()</b> command to read the young male height
+      data from the file <i>'height_male_young.csv'</i>, storing it in a 
+      variable.  This discussion will assume you've named the variable
+      <i>hm</i>.  
+    </p>
+
+    <p>
+      3.2) Use the <b>print()</b> statement to print a listing of <i>hm</i>.
+      Notice the column containing the age.  Notice that heights increase
+      whether you read down a column or across a row.  Notice that the
+      column labeled "p50" contains the median height, which we will want
+      to concentrate on.  Extract a copy of the "age" and "p50" columns of data.
+      We will assume you call the first variable <i>age</i> and the second variable
+      <i>height</i>
+    </p>
+
+    <p>
+      3.3) Use the <b>plot()</b> statement to display <i>age</i> versus <i>height</i>.
+      You should notice that the plot data seems to form three segments.  There is
+      a short period of rapid growth, then an extensive period of moderate growth,
+      followed by a sudden change to almost no growth.  
+    </p>
+
+    <p>
+      3.4) We will focus on the period of moderate growth.  Estimate the first and 
+      last years during which the moderate growth rate holds.  Make new variables 
+      <i>age2</i> and <i>height2</i> which copy only the data over this interval.  
+      For instance, to copy just the data between ages 5 to 10, the commands would be:
+      <pre>
+        age2 <- age[6:11]
+        height2 <- height[6:11]
+      </pre>
+      (The data for ages 5 to 10 is stored in entries 6 through 11, because we
+      included data for age 0!  Also, please note that ages 5 to 10 is <u>not</u>
+      a good response for this question!)
+    </p>
+
+    <p>
+      3.5) Use the <b>plot()</b> command on your subset of data to see that
+      you've extracted data that seems to lie along a line.  Now use the 
+      <b>lm()</b> command to ask for a linear relationship that relates
+      <i>height2</i> to <i>age2</i>.  The values of <i>slope</i> and <i>intercept</i>
+      that are computed indicate that, based on the observed data, the 
+      relationship can be explained by the following mathematical formula:
+      <pre>
+        height = slope * age + intercept
+      </pre>
+    </p>
+
+    <p>
+      3.6) Now we will test this formula, by having it predict the height of males
+      between ages 0 and 40.  To do this, set up a new age vector by the command
+      <pre>
+        age3 <- 0 : 40
+      </pre>
+      Now compute the corresponding predicted heights by plugging in the values
+      of <i>slope</i> and <i>intercept</i>:
+      <pre>
+        height3 <- slope * age3 + intercept
+      </pre>
+    </p>
+
+    <p>
+      3.7) What does your formula predict as the height of the average 40 year old
+      male?   Use the following form of the <b>plot()</b> command to display the 
+      prediction line with the data it was based on:
+      <pre>
+        plot ( age3, height3, type = "l" )
+        point ( age, height )
+      </pre>
+    </p>
+
+    <p>
+      <i>
+        The linear formula that the <b>lm()</b> command found was good enough
+        to describe the data we observed.  Since the formula allows us to plug in
+        any age, it will produce predictions for ages far outside the range of data
+        we observed, even for negative ages.  We know people don't continue to
+        grow throughout adulthood; similarly, it can be dangerous to "discover"
+        a relationship based on a set of data, and then use that relationship
+        to predict behavior for data that is far beyond the observed range.
+      </i>
+    </p>
+
+    <hr>
+
+    <i>
+      Last modified on 15 September 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>
+ 

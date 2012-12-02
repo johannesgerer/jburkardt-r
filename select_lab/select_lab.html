@@ -1,0 +1,574 @@
+<html>
+
+  <head>
+    <title>
+      SELECT_LAB - Combine, Select or Merge Data
+    </title>
+  </head>
+
+  <body bgcolor="#eeeeee" link="#cc0000" alink="#ff3300" vlink="#000055">
+
+    <h1 align = "center">
+      SELECT_LAB <br> Combine, Select or Merge Data
+    </h1>
+
+    <hr>
+      http://people.sc.fsu.edu/~jburkardt/public_html/r_src/select_lab/select_lab.html
+    <hr>
+
+    <p>
+      <i>
+        It is often the case that the data you want to analyze must be prepared
+        in some way before it is ready.  The problem may simply be that parts of
+        your data are stored in different datasets, in which case you need to
+        extract and combine them in some way.  Instead, you may find that all
+        your data is available in a single file, but that there are many other
+        records in that file that you want to exclude.  In this case, your task
+        is to select the data of interest to you.  Another common situation occurs
+        when a dataset contains multiple items of related information, which we
+        want to merge before analyzing.  This is something like starting with
+        a deck of 52 cards and grouping them into four separate suits.
+      </i>
+    </p>
+
+    <p>
+      <i>
+        This lab will look at procedures for combining, selecting, or merging
+        data so that we are able to carry out the analysis we are interested in.
+      </i>
+    </p>
+
+    <h3 align = "center">
+      1: Creating a Data File, Dealing with Missing Data
+    </h3>
+
+    <p>
+      When a large set of statistical measurements are compiled to form a
+      single dataset, there may be cases where certain measurements are missing
+      or unknown.  For instance a database of movies in which Brad Pitt had a role
+      might want to list the title, year, and the amount of money made by ticket
+      sales in the US market.  However, for any early movie like "Cutting
+      Class", the sales information might not have been recorded, and if the
+      database is being compiled in 2011, the ticket sales for the movie 
+      "World War Z" will not even have started yet.  Nonetheless, it may be
+      important to include both these movies in the database, even though
+      their information is incomplete.  What, then, is to be done about the
+      missing item of information?
+    </p>
+
+    <p>
+      Consider the task of entering data into R about some movies in which
+      Brad Pitt had a role.  We will start by supposing we have information
+      about the title, release date, budget for several movies, as follows:
+      <table border="1" align="center">
+        <tr>
+          <th>Title</th><th>Release</th><th>Budget</th>
+        </tr>
+        <tr>
+          <td>Babel</td><td>October 29, 2006</th><td>$20,000,000</td>
+        </tr>
+        <tr>
+          <td>Kalifornia</td><td>September 3, 1993</th><td>?</td>
+        </tr>
+        <tr>
+          <td>Megamind</td><td>November 5, 2010</th><td>$130,000,000</td>
+        </tr>
+        <tr>
+          <td>Mr and Mrs Smith</td><td>June 10, 2005</th><td>$110,000,000</td>
+        </tr>
+        <tr>
+          <td>Snatch</td><td>January 19, 2000</th><td>$10,000,000</td>
+        </tr>
+        <tr>
+          <td>Troy</td><td>May 14, 2004</th><td>$150,000,000</td>
+        </tr>
+      </table>
+    </p>
+
+    <p>
+      We can store this information in a datafile so that it can be
+      processed by R.  Before doing so, we must note several issues:
+      <ul>
+        <li>
+          Each movie title is a single item of data; because this data
+          is not a number, it must be marked off by double quotes.
+          Thus, we would have <b>"Babel"</b>.
+        </li>
+        <li>
+          Each date is also a single item of data, and is not a number,
+          so it will have to be quoted.  Also, it's probably better to
+          replace the written out dates by a shortened form.  Thus,
+          the release date of Babel would be <b>"10/29/2006"</b>.
+        </li>
+        <li>
+          The budget is a number, but the computer does not want to see
+          a dollar sign in front of the budget, and it will get confused
+          by the commas that mark off millions and thousands.  The budget
+          for Babel will have to be entered as <b>20000000</b>.
+        </li>
+        <li>
+          If we use the CSV (comma-separated-value) format for the data file,
+          then each line of the file will contain a title, release date, and budget,
+          separated by commas: <b>"Babel","10/29/2006",20000000</b>
+        </li>
+        <li>
+          The first line of the CSV file usually contains names for each column
+          of data.  This is where we would place the line 
+          <b>"Title", "Release", "Budget"</b>.  If we include a header line
+          in a CSV file, and we use <b>read.csv()</b> to read the data, then
+          we will want to include the information <b>header=TRUE</b> so that
+          R understands the first line is not actually data.
+        </li>
+        <li>
+          What are we going to do about the budget for "Kalifornia"?
+          R insists that there be the same number of data items on each line.
+          However, if a particular data item is unknown, then R can handle
+          that, as long as we use the right input format.  If the missing data
+          item is a number, we simply enter a blank.  If the missing item
+          would normally be a quoted string, then we enter <b>"NA"</b>.
+          If a numeric data item is entered as blank, we must still put in
+          the right number of commas, as though it was there!  Thus,
+          the data line for "Kalifornia" should read
+          </b>"Kalifornia","9/3/1993", </b>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      1.1) Use a text editor to create a csv file, called <i>flick.csv</i>, 
+      containing the information from the above table.
+    </p>
+
+    <p>
+      1.2) Start the R program, and use the <b>read.csv()</b> command to 
+      read your data file, and store the result as a data frame called "flick1".  
+      Use the <b>print()</b> command to verify that
+      your data has been read correctly, and to see how the missing budget
+      item is displayed.
+    <p>
+
+    <p>
+      1.3) Now that we've entered the data, we decide that we want to include
+      the distributor of each movie.  We only know the distributors for
+      four of the six movies; for the other two movies, we will list the distributor
+      as "NA".  Since we are adding a distributor for each movie, this is like
+      adding a column to the table.
+    </p>
+
+    <p>
+      <table border="1" align="center">
+        <tr>
+          <th>Title</th><th>...</th><th>...</th><th>Distributor</th>
+        </tr>
+        <tr>
+          <td>Babel</td><td>...</td><td>...</td><td>?</td>
+        </tr>
+        <tr>
+          <td>Kalifornia</td><td>...</td><td>...</td><td>MGM</td>
+        </tr>
+        <tr>
+          <td>Megamind</td><td>...</td><td>...</td><td>Dreamworks</td>
+        </tr>
+        <tr>
+          <td>Mr and Mrs Smith</td><td>...</td><td>...</td><td>?</td>
+        </tr>
+        <tr>
+          <td>Snatch</td><td>...</td><td>...</td><td>Sony</td>
+        </tr>
+        <tr>
+          <td>Troy</td><td>...</td><td>...</td><td>Warner</td>
+        </tr>
+      </table>
+    </p>
+
+    <p>
+      To add this data to the data frame, we first use the 
+      "combine" function <b>c()</b> to create a list of the new data.
+<pre>
+        Distributor <- c ( "NA", "MGM", "Dreamworks", "NA", "Sony", "Warner" )
+</pre>
+      Now we create a new dataframe using the <b>cbind()</b> function to append the
+      Distributor column to the columns of the old data frame:
+<pre>
+        flick2 <- cbind ( flick1, Distributor )
+</pre>
+      Use the <b>print()</b> command to verify that "flick" now includes the
+      Distributor information.
+    </p>
+
+    <p>
+      1.4) We now wish to add information for two more movies, which is essentially
+      adding two new rows to our dataframe.  The information we want to add is 
+      in the following table:
+    </p>
+
+    <p>
+      <table border="1" align="center">
+        <tr>
+          <th>Title</th><th>Release</th><th>Budget</th><th>Distributor</th>
+        </tr>
+        <tr>
+          <td>Ocean's Eleven</td><td>December 7, 2001</th><td>$85,000,000</td><td>Warner</td>
+        </tr>
+        <tr>
+          <td>Thelma & Louise</td><td>May 24, 1991</th><td>$16,500,000</td><td>?</td>
+        </tr>
+      </table>
+    </p>
+
+    <p>
+      Adding new rows to a dataframe is more awkward than adding columns, partly
+      because the data along a row may be a mixture of character and numeric values.
+      This means that, before we can combine the data, we have to put it into a separate
+      data frame that uses the same column headings as "flick2".
+    </p>
+
+    <p>
+      Use the following R commands to create a data frame containing the
+      information about the two new movies.
+<pre>
+        Title <- c ( "Ocean's Eleven", "Thelma & Louise" )
+        Release <- c ( "12/7/2001", "5/24/1991" )
+        Budget <- c ( 85000000, 16500000 )
+        Distributor <- c ( "Warner", "NA" )
+        flick3 <- data.frame ( Title, Release, Budget, Distributor )
+</pre>
+    </p>
+
+    <p>
+      Now we can combine the two data frames, which have the same titles and
+      the same number of columns, using the <b>rbind()</b> command:
+      <pre>
+        flick4 <- rbind ( flick2, flick3 );
+      </pre>
+      Use the <b>print()</b> command to verify that the data frame "flick4"
+      contains all the information.
+    </p>
+
+    <p>
+      1.5) Save a copy of the updated <i>flick4</i> data frame as a CSV file, by
+      using the <b>write.csv()</b> command:
+      <pre>
+        write.csv ( flick4, file = "flick4.csv" )
+      </pre>
+    </p>
+
+    <h3 align = "center">
+      2: Selecting Data
+    </h3>
+
+    <p>
+      Suppose we have a large set of data about movies, including such information
+      as titles, distributor, budget, and gross sales.  Since several hundred movies
+      are released each year, it's useful to be able to select a particular subset
+      of this information for analysis or graphical display.  
+    </p>
+
+    <p>
+      2.1) This part of the lab requires that you start by copying a small CSV file 
+      called <a href = "http://people.sc.fsu.edu/~jburkardt/r_src/select_lab/brad_pitt.csv">brad_pitt.csv</a>.  Now start R and use 
+      the <b>read.csv()</b> command to read the file.
+      This file includes header information, so be sure to read that correctly.
+      Store the result as the data frame <i>pitt</i>, and use the <b>print()</b>
+      command to verify that the data was read correctly.
+    </p>
+
+    <p>
+      2.2) The data frame <i>pitt</i> contains all the information from the file.
+      If we simply type <b>pitt</b>, R will print out this information.  We will now
+      look at ways of having R display only a portion of this information,
+      using <i>bracket notation</i>:
+<pre>
+         <i>optional name</i> <- <i>data frame</i> [ <i>rows</i>, <i>columns</i> ] 
+</pre>
+      Here <i>rows</i> and <i>columns</i> are information that selects the rows
+      and columns we want.
+    </p>
+
+    <p>
+      Thus, we can select data if we know the numeric index of a row or column.
+      To see row 1 (and all its columns):
+<pre>
+        pitt [ 1, ] 
+</pre>
+      To select all rows, but just column 2:
+<pre>
+        pitt [ , 2 ]
+</pre>
+      and to select row 3, column 4:
+<pre>
+        pitt [ 3, 4 ]
+</pre>
+      To "select" the entire set of data, we can type
+<pre>
+         pitt [ , ] 
+</pre>
+      although, of course, in this case we could have simply said <b>pitt</b>!
+    </p>
+
+    <p>
+      Rather than selecting a single row or column, we can use R's colon
+      notation.  Remember that <b>3:7</b> means 3, 4, 5, 6, 7, so we can
+      ask for rows 3 to 7 by
+<pre>
+         pitt [ 3:7, ] 
+</pre>
+      If the indices we want are not sequential, we can use the <b>c()</b>
+      command to form a list.  Thus, if we're interested in rows 2, 3, 7 
+      and 11, the expression <b>c(2,3,7,11)</b> makes this a single list,
+      and we can display exactly those rows, and just the title (in column 1) by
+<pre>
+         pitt [ c(2,3,7,11), 1 ] 
+</pre>
+      Similarly, if we wanted to print just the 
+      gross receipts (column 3) followed by the title (column 1) for
+      movies 9, 10, and 11, we could use the command
+<pre>
+         pitt [ 9:11, c(3,1) ] 
+</pre>
+      Notice that the column data appears in exactly the order we requested.
+      <i>What do you think would happen if we specified c(3,1,3) for the columns?</i>
+    </p>
+
+    <p>
+      However, we often don't want to select a row or column by its index,
+      but rather because of some property that the item has.  Perhaps we
+      want to list the titles of all movies made in 1997.  R allows us
+      to do this using the bracket notation, but now we have to specify
+      the rows we want.  The column containing the movie year is called
+      <i>Year</i>.  You can print all the year information in the <i>pitt</i>
+      dataframe by typing
+<pre>
+         pitt$Year
+</pre>
+      You can ask which movies came out in 1997 by writing
+<pre>
+         pitt$Year == 1997
+</pre>
+      Note that we need <b>two</b> equal signs when we are not assigning
+      a value, but looking for occurrences of a value!
+      Notice that this command produces a list of TRUE and FALSE values.
+      If we use this command as a row selector, R will display exactly
+      those movies that came out in 1997!
+<pre>
+         pitt [ pitt$Year == 1997, 1 ]
+</pre>
+    </p>
+
+    <p>
+      Here are some examples of selections we could make, assuming that
+      we are dealing with a numeric variable:
+      <ul>
+        <li>
+          pitt$Year == 1997<i>, movies made in 1997;</i>
+        </li>
+        <li>
+          pitt$Year != 1997<i>, movies <b>not</b> made in 1997;</i>
+        </li>
+        <li>
+          pitt$Year < 1997<i>, movies made before 1997;</i>
+        </li>
+        <li>
+          pitt$Year <= 1997<i>, movies made in 1997 or earlier;</i>
+        </li>
+        <li>
+          pitt$Year > 1997<i>, movies made after 1997;</i>
+        </li>
+        <li>
+          pitt$Year => 1997<i>, movies made in 1997 or later;</i>
+        </li>
+        <li>
+          pitt$Year == 1997 | pitt$Year == 2000<i>, movies made in
+          1997 <b>or</b> 2000;</i>
+        </li>
+        <li>
+          1997 <= pitt$Year & pitt$Year < 2000<i>, movies made
+          from 1997 up to, but not including, 2000.</i>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      2.3) We would like to select the movies that Brad Pitt made between 1995
+      and 2000.  The data frame stores the year as the variable <i>pitt$Year</i>.
+      A movie was made on or after 1995 if it is true that:
+<pre>
+        1995 <= pitt$Year
+</pre>
+      A movie was made between 1995 and 2000 if it is true that:
+<pre>
+        1995 <= pitt$Year & pitt$Year <= 2000
+</pre>
+      We can use this logical expression to select the rows we want;
+      for now, we will suppose that all the column information is interesting to us.
+      The format of the command we want to use is
+<pre>
+        <i>new dataframe</i> <- <i>old dataframe</i> [ <i>rows</i>, <i>columns</i> ]
+</pre>
+      so, to select from <i>pitt</i> the rows (movies) in the given year range,
+      we type:
+<pre>
+        pitt2 <- pitt [ 1995 <= pitt$Year & pitt$Year <= 2000,  ]
+</pre>
+      Notice the comma in the above command; it separates the row selection (range
+      of years) from the column selection (which we did not use).
+    </p>
+
+    <p>
+      2.4) Now we want to consider movies made after 2007,
+      and we only want to list the title (column 1) and gross receipts
+      (column 3).  <i>What form of the bracket command will display title and gross
+      for just these 9 movies?</i>
+<pre>
+        pitt [ ?, ? ]
+</pre>
+    </p>
+
+    <h3 align = "center">
+      3: Dealing with Missing Data
+    </h3>
+
+    <p>
+      We'd like to print and plot the data in the gross receipts column of the
+      data file.  However, note that this column has many <b>NA</b> entries,
+      either because the data has been lost over time, or because the movie hadn't
+      actually been released when the data file was created.  The NA values
+      work fine when we print information.  But how is R going to handle them
+      when we try to select or plot information?
+    </p>
+
+    </p>
+      3.1) To try to get an idea of whether there will be a problem, let's
+      use the bracket notation, and ask for a list of all movies for which
+      the gross receipts were more than $150,000,000.  If you check the
+      data first, by using the <b>print()</b> command, you will see that
+      there are just two such movies, "Mr and Mrs Smith" and "Ocean's Eleven".
+      Let's try asking R this question:
+<pre>
+        pitt [ 150000000 <= pitt$Gross, ]
+</pre>
+      Unfortunately, we see the two movies we want, but also every movie for
+      which the gross receipt information has the NA value.  
+    </p>
+
+    <p>
+      If we are interested in gross receipts, then the records for which no
+      such information is available are of no interest to us.  And it looks as
+      though our selection commands won't work properly when NA data is involved.
+      What can we do?
+    </p>
+
+    <p>
+      3.2) The right approach is to make a copy of the data frame that drops
+      those records that don't have gross receipts information.  In other words,
+      we want to make a new data frame by selecting those records for which
+      the gross receipts are not "NA".  To ask if a number is an NA, we write
+<pre>
+        is.na ( <i>number</i> )
+</pre>
+      To ask if a number is <b>not</b> an NA, we write
+<pre>
+        !is.na ( <i>number</i> )
+</pre>
+      To ask if the number <i>pitt$Gross</i> is not an NA, we write
+<pre>
+        !is.na ( pitt$Gross )
+</pre>
+    </p>
+
+    <p>
+      Make a new data frame, called <i>pitt2</i>, containing the records for which
+      gross receipt information is available, by typing
+<pre>
+        pitt2 <- pitt [ !is.na ( pitt$Gross), ]
+ </pre>
+      The <b>print()</b> command can be used to verify that your command
+      selected the correct data.
+    </p>
+
+    <p>
+      3.3) Now repeat your question, asking which movies had gross receipts
+      of $150,000,000 or more, but ask it about the <i>pitt2</i> data frame!
+      If you ask this question correctly, you see exactly two movies listed.
+    </p>
+
+    <p>
+      3.4) Use the <b>barplot()</b> command on the <i>pitt2</i> gross receipts
+      data to illustrate the hits and flops.
+    </p>
+
+    <h3 align = "center">
+      4: Grouping Data
+    </h3>
+
+    <p>
+      4.1) This part of the lab requires that you start by copying a large CSV file 
+      called <a href = "http://people.sc.fsu.edu/~jburkardt/r_src/select_lab/movies_2010.csv">movies_2010.csv</a>.  Now start R and use 
+      the <b>read.csv()</b> command to read this file into the data frame "movie1".
+      This file includes header information, so be sure to read that correctly.
+      Since the file is large, don't use the <b>print()</b> command!  Instead, 
+      try the <b>summary()</b> command.  The first column is labeled "Rank", 
+      and you should see that it runs from 1 to 670; indeed, there are 670 movies 
+      in this file.
+    </p>
+
+    <p>
+      4.2) Suppose we want to look at the gross receipts for movies distributed
+      by IFC Films.  That means we want to look at movies based on the "Distributor" 
+      field.  However, as the <b>summary()</b> command indicates, there are 39 movies
+      for which the "Distributor" is listed as "NA".  R has trouble working with
+      NA data, so our first task is to make a new dataframe containing only the 
+      movies for which "Distributor" is not "NA".
+    </p>
+
+    <p>
+      The movies (rows) we want to select are those for which the distributor is
+      <b>not</b> an NA value.  So we are looking at the <i>movie1</i> dataframe,
+      at column <i>Distributor</i>, and we want to select those rows for which
+      this value is not NA.  R uses the function <b>is.na()</b> to report that
+      a value is NA; an exclamation mark reverses this check, so that we are
+      picking up the non-NA values:
+      <pre>
+        movie2 <- movie1 [ !is.na ( movie1$Distibutor ), ]
+      </pre>
+      Use the <b>summary()</b> command on the <i>movie2</i> data frame. Under the
+      Distributor heading, there should be no NA values.  If you look closely at
+      the Title heading, you should be able to see that there are now 631 movies 
+      in the new data frame.
+    </p>
+
+    <p>
+      4.3) Now that the Distributor column is cleaned up, we can make a new
+      data frame that selects movies based on the Distibutor value.  In particular,
+      we could pick out movies distributed by IFC Films:
+      <pre>
+        movie3 <- movie2 [ movie2$Distributor == "IFC Films", ]
+      </pre>
+      Here, the <b>summary()</b> command should show 33 films in the new data frame;
+      the highest ranking movie came in at 182.
+    </p>
+
+    <p>
+      4.4) Since there are just a few movies in this data frame, use the <b>print()</b>
+      command to report the information for them.
+    </p>
+
+    <p>
+      4.5) Use the <b>barplot()</b> command to plot the gross receipts for each of
+      the movies distributed by IFC Films.  This plot should suggest that IFC Films
+      had just two moderately successful films (gross more than $1,000,000) while
+      the remaining films typically had gross receipts of around $500,000 or less.
+    </p>
+
+    <hr>
+
+    <i>
+      Last modified on 24 November 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>
+ 

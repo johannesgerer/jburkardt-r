@@ -1,0 +1,51 @@
+"Movie", "Company", "Length (min)", "Tobacco Use (sec)", "Alcohol Use (sec)"
+"Snow White", "Disney", 83, 0, 0
+"Pinnocchio", "Disney", 88, 223, 80
+"Fantasia", "Disney", 120, 0, 0
+"Dumbo", "Disney", 64, 176, 88
+"Bambi", "Disney", 69, 0, 0
+"Three Caballeros", "Disney", 71, 548, 8
+"Fun and Fancy Free", "Disney", 76, 0, 4
+"Cinderella", "Disney", 74, 37, 0
+"Alice in Wonderland", "Disney", 75, 158, 0
+"Peter Pan", "Disney", 76, 51, 33
+"Lady and the Tramp", "Disney", 75, 0, 0
+"Sleeping Beauty", "Disney", 75, 0, 113
+"101 Dalmations", "Disney", 79, 299, 51
+"Sword and the Stone", "Disney", 80, 37, 20
+"Jungle Book", "Disney", 78, 0, 0
+"Aristocats", "Disney", 78, 11, 142
+"Robin Hood", "Disney", 83, 0, 39
+"Rescuers", "Disney", 77, 0, 0
+"Winnie the Pooh", "Disney", 71, 0, 0
+"Fox and the Hound", "Disney", 83, 0, 0
+"Black Cauldron", "Disney", 80, 0, 34
+"Great Mouse Detective", "Disney", 73, 165, 414
+"Oliver and Company", "Disney", 72, 74, 0
+"Little Mermaid", "Disney", 82, 9, 0
+"Rescuers Down Under", "Disney", 74, 0, 76
+"Beauty and the Beast", "Disney", 84, 0, 123
+"Aladdin", "Disney", 90, 2, 3
+"Lion King", "Disney", 89, 0, 0
+"Pocahontas", "Disney", 81, 6, 7
+"Toy Story", "Disney", 81, 0, 0
+"Hunchback of Notre Dame", "Disney", 90, 23, 46
+"James and the Giant Peach", "Disney", 79, 206, 38
+"Hercules", "Disney", 92, 9, 13
+"Secret of NIMH", "MGM", 82, 0, 0
+"All Dogs Go to Heaven", "MGM", 89, 205, 73
+"All Dogs Go to Heaven 2", "MGM", 82, 162, 72
+"Babes in Toyland", "MGM", 74, 0, 0
+"Thumbelina", "Warner Bros", 86, 6, 5
+"Troll in Central Park", "Warner Bros", 76, 1, 0
+"Space Jam", "Warner Bros", 81, 117, 0
+"Pippi Longstocking", "Warner Bros", 75, 5, 0
+"Cats Don't Dance", "Warner Bros", 75, 91, 0
+"An American Tail", "Universal", 77, 155, 74
+"Land Before Time", "Universal", 70, 0, 0
+"Fievel Goes West", "Universal", 75, 24, 28
+"We're Back: Dinosaur Story", "Universal", 64, 55, 0
+"Land Before Time 2", "Universal", 73, 0, 0
+"Balto", "Universal", 74, 0, 0
+"Once Upon a Forest", "20th Century Fox", 71, 0, 0
+"Anastasia",  "20th Century Fox", 94, 17, 39

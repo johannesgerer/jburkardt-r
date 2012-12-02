@@ -1,0 +1,218 @@
+<html>
+
+  <head>
+    <title>
+      XLS_IO - Reading or Writing Microsoft EXCEL Files for use by R
+    </title>
+  </head>
+
+  <body bgcolor="#eeeeee" link="#cc0000" alink="#ff3300" vlink="#000055">
+
+    <h1 align = "center">
+      XLS_IO <br> Reading or Writing Microsoft EXCEL Files for use by R
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>XLS_IO</b> contains R programs which
+      illustrate how data can be shared between Microsoft EXCEL and R,
+      using XLS and CSV files.
+    </p>
+
+    <p>
+      Microsoft EXCEL data is typically stored in a file with the
+      extension XLS.  The XLS file format is a Microsoft proprietary
+      scheme, and it is somewhat difficult for another program to
+      extract data directly from an XLS file.
+    </p>
+
+    <p>
+      We will not try to have R read an EXCEL file directly.
+      Instead, we will use the intermediate CSV (comma separated variable)
+      format.  In other words, given an XLS file, we will have EXCEL
+      read it in, and then write it out as a CSV file.  And if we have
+      a CSV file, EXCEL can read it directly.
+    </p>
+
+    <p>
+      This means that EXCEL and R can "communicate" as long as the
+      CSV files have the appropriate form.
+    </p>
+
+    <p>
+      One problem that can arise is that the CSV file might contain
+      text, or strings, either as row or column labels, or as 
+      actual data.  In order for strings to be handled properly,
+      R will need them to appear inside quotes.  
+    </p>
+
+    <p>
+      For example, the dataset <b>parentht</b> records the sex, height,
+      mother's height and father's height for each of 40 children.
+      If we have EXCEL read the file <b>parentht.xls</b> and then
+      save the dataset as a CSV file <b>parentht.csv</b>, the first
+      line of the CSV file contains labels for the columns, and reads:
+      <pre>
+        Gender,Height,Mother's Height,Father's Height
+      </pre>
+      Because the labels are strings, and contain more than one word,
+      R will not be able to read this data correctly.  Since only this
+      single line is a problem, we might fix the difficulty by simply
+      using an editor to place double quotes around each label:
+      <pre>
+        Gender, Height, "Mother's Height", "Father's Height"
+      </pre>
+    </p>
+
+    <h3 align = "center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href = "../../txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align = "center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href = "../../r_src/csv_io/csv_io.html">
+      CSV_IO</a> 
+      R programs which
+      illustrate how R can read or write CSV (Comma Separated Variable) files.
+    </p>
+
+    <h3 align = "center">
+      Reference:
+    </h3>
+
+    <p>
+      <ol>
+        <li>
+          Joseph Adler,<br>
+          R in a Nutshell,<br>
+          O'Reilly, 2009,<br>
+          ISBN13: 978-0-596-80170-0.
+        </li>
+        <li>
+          <a href = "http://www.r-project.org/">
+                     http://www.r-project.org</a>, 
+          the official R web site.
+        </li>
+        <li>
+          <a href = "http://cran.r-project.org/doc/manuals/R-data.pdf">
+                     http://cran.r-project.org/doc/manuals/R-data.pdf</a>, 
+          R Data Import/Export
+        </li>
+      </ol>
+    </p>
+
+    <h3 align = "center">
+      Examples and Tests:
+    </h3>
+
+    <p>
+      <b>BODYTEMP</b> is a dataset of 105 body temperatures in degrees
+      Fahrenheit.  There is only one variable, and there are no column 
+      labels, so this is a particularly easy dataset to handle.
+      <ul>
+        <li>
+          <a href = "bodytemp.xls">bodytemp.xls</a>, 
+          the data, stored as an EXCEL dataset.
+        </li>
+        <li>
+          <a href = "bodytemp.csv">bodytemp.csv</a>, 
+          the data, stored as a CSV file.
+        </li>
+        <li>
+          <a href = "read_bodytemp.R">read_bodytemp.R</a>, 
+          an R script which reads the CSV file and prints the data.
+        </li>
+        <li>
+          <a href = "read_bodytemp_output.txt">read_bodytemp_output.txt</a>, 
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>PARENTHT</b> is a dataset of 40 children, listing sex, height,
+      and the height of both parents.  Thus, there are four columns of data.
+      Each column as a label, and these are text strings.  When EXCEL outputs
+      the CSV file, the text strings are not quoted, which will cause problems.
+      Using an editor, the strings can be quoted, before being input to R.
+      <ul>
+        <li>
+          <a href = "parentht.xls">parentht.xls</a>, 
+          the data, stored as an EXCEL dataset.
+        </li>
+        <li>
+          <a href = "parentht_raw.csv">parentht_raw.csv</a>, 
+          the data, converted by EXCEL into a CSV file.
+        </li>
+        <li>
+          <a href = "parentht.csv">parentht.csv</a>, 
+          the data, stored as a CSV file, with column labels quoted.
+        </li>
+        <li>
+          <a href = "read_parentht.R">read_parentht.R</a>, 
+          an R script which reads the CSV file and prints the data.
+        </li>
+        <li>
+          <a href = "read_parentht_output.txt">read_parentht_output.txt</a>, 
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <b>CHMOVIE</b> is a dataset of 50 children's movies, listing title,
+      company, length in minutes, seconds of tobacco use, and seconds of alcohol use.
+      There are five columns of data, each column as a label, and these are text strings.  
+      Using an editor, the strings in the CSV file output by EXCEL are all quoted
+      before being passed to R.
+      <ul>
+        <li>
+          <a href = "chmovie.xls">chmovie.xls</a>, 
+          the data, stored as an EXCEL dataset.
+        </li>
+        <li>
+          <a href = "chmovie_raw.csv">chmovie_raw.csv</a>, 
+          the data, converted by EXCEL into a CSV file.
+        </li>
+        <li>
+          <a href = "chmovie.csv">chmovie.csv</a>, 
+          the data, stored as a CSV file, with column labels and data strings quoted.
+        </li>
+        <li>
+          <a href = "read_chmovie.R">read_chmovie.R</a>, 
+          an R script which reads the CSV file and prints the data.
+        </li>
+        <li>
+          <a href = "read_chmovie_output.txt">read_chmovie_output.txt</a>, 
+          the output file.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      You can go up one level to <a href = "../r.html">
+      the R page</a>.
+    </p>
+
+    <hr>
+
+    <i>
+      Last modified on 28 August 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  </body>
+
+</html>
+ 

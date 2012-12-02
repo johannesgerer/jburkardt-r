@@ -1,0 +1,57 @@
+
+R version 2.13.0 (2011-04-13)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin10.7.0/x86_64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> survey <- read.table ( "survey.dat", header=TRUE )
+> summary(survey)
+      OBS              ID        SEX        AGE            INC       
+ Min.   : 1.00   Min.   : 1.00   F:5   Min.   :24.0   Min.   : 6.00  
+ 1st Qu.: 3.25   1st Qu.:17.25   M:5   1st Qu.:34.0   1st Qu.: 9.50  
+ Median : 5.50   Median :33.50         Median :40.0   Median :14.00  
+ Mean   : 5.50   Mean   :35.00         Mean   :38.3   Mean   :12.50  
+ 3rd Qu.: 7.75   3rd Qu.:49.75         3rd Qu.:45.0   3rd Qu.:16.25  
+ Max.   :10.00   Max.   :81.00         Max.   :52.0   Max.   :17.00  
+       R1             R2            R3     
+ Min.   :4.00   Min.   :2.0   Min.   :2.0  
+ 1st Qu.:5.25   1st Qu.:5.0   1st Qu.:3.0  
+ Median :6.50   Median :5.0   Median :5.5  
+ Mean   :6.10   Mean   :5.0   Mean   :4.9  
+ 3rd Qu.:7.00   3rd Qu.:6.5   3rd Qu.:7.0  
+ Max.   :7.00   Max.   :7.0   Max.   :7.0  
+> 
+> reg_data <- lm(INC~AGE,data=survey)
+> summary(reg_data)
+
+Call:
+lm(formula = INC ~ AGE, data = survey)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.2107 -2.6361  0.9852  2.0809  3.0307 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  25.5866     4.3569   5.873 0.000373 ***
+AGE          -0.3417     0.1109  -3.082 0.015074 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 3.085 on 8 degrees of freedom
+Multiple R-squared: 0.5428,	Adjusted R-squared: 0.4857 
+F-statistic: 9.498 on 1 and 8 DF,  p-value: 0.01507 
+
+> q()

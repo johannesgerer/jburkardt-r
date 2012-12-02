@@ -1,0 +1,32 @@
+
+R version 2.13.0 (2011-04-13)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin10.7.0/x86_64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(caTools)        # external package providing write.gif function
+> jet.colors = colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000")) 
+> m = 600                 # define size
+> C = complex( real=rep(seq(-1.8,0.6, length.out=m), each=m ), 
++              imag=rep(seq(-1.2,1.2, length.out=m), m ) ) 
+> C = matrix(C,m,m)       # reshape as square matrix of complex numbers
+> Z = 0                   # initialize Z to zero
+> X = array(0, c(m,m,20)) # initialize output 3D array
+> for (k in 1:20) {       # loop with 20 iterations
++   Z = Z^2+C             # the central difference equation  
++   X[,,k] = exp(-abs(Z)) # capture results
++ } 
+> write.gif(X, "Mandelbrot.gif", col=jet.colors, delay=100)
+> 
